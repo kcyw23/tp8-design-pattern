@@ -1,17 +1,15 @@
 package fr.eidd;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import fr.eidd.repository.InMemoryStudentRepository;
+import fr.eidd.repository.StudentRepository;
+import fr.eidd.service.StudentService;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        StudentRepository repo = new InMemoryStudentRepository();
+        StudentService service = new StudentService(repo);
+        service.addStudent("1", "Alice", 15.5);
+        service.addStudent("2", "Bob", 12.0);
+        System.out.println(service.getAllStudents());
     }
 }

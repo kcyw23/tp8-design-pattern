@@ -2,6 +2,7 @@ package fr.eidd.service;
 
 import fr.eidd.model.Student;
 import fr.eidd.repository.StudentRepository;
+import fr.eidd.strategy.SortStrategy;
 
 import java.util.List;
 
@@ -28,5 +29,9 @@ public class StudentService {
 
     public void deleteStudent(String id) {
         repository.delete(id);
+    }
+
+    public List<Student> getSortedStudents(SortStrategy strategy) {
+        return strategy.sort(repository.findAll());
     }
 }

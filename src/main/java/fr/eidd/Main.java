@@ -16,6 +16,7 @@ public class Main {
         CLI cli = new CLI();
         cli.register(new AddStudentCommand(service, scanner));
         cli.register(new ListStudentsCommand(service));
+        cli.register(new ListSortedStudentsCommand(service, scanner));
         cli.register(new DeleteStudentCommand(service, scanner));
         cli.register(new ExitCommand());
         cli.run();

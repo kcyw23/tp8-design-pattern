@@ -9,7 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,11 +23,14 @@ jobs:
       - name: Build
         run: mvn compile -B
 
-      - name: Checkstyle
-        run: mvn checkstyle:check -B
-
       - name: Run tests
         run: mvn test -B
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Package
         run: mvn package -B -DskipTests

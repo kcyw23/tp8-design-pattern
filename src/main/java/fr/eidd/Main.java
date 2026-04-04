@@ -1,17 +1,24 @@
 package fr.eidd;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import fr.eidd.command.*;
+import fr.eidd.repository.InMemoryStudentRepository;
+import fr.eidd.repository.StudentRepository;
+import fr.eidd.service.StudentService;
+
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner scanner = new Scanner(System.in);
+        StudentRepository repo = new InMemoryStudentRepository();
+        StudentService service = new StudentService(repo);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        CLI cli = new CLI();
+        cli.register(new AddStudentCommand(service, scanner));
+        cli.register(new ListStudentsCommand(service));
+        cli.register(new ListSortedStudentsCommand(service, scanner));
+        cli.register(new DeleteStudentCommand(service, scanner));
+        cli.register(new ExitCommand());
+        cli.run();
     }
 }
